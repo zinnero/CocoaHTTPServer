@@ -198,4 +198,9 @@
 - (NSUInteger)numberOfHTTPConnections;
 - (NSUInteger)numberOfWebSocketConnections;
 
+/**
+ *
+**/
+- (NSNetService*) netService;
+
 @end

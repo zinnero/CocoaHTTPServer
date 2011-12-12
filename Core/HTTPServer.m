@@ -581,6 +581,11 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 #pragma mark Bonjour
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+- (NSNetService*) netService;
+{
+    return [[netService retain] autorelease];
+}
+
 - (void)publishBonjour
 {
 	HTTPLogTrace();

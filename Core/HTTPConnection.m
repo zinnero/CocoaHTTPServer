@@ -89,6 +89,9 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN; // | HTTP_LOG_FLAG_TRACE;
 
 @implementation HTTPConnection
 
+@synthesize request;
+
+
 static NSMutableArray *recentNonces;
 
 /**
@@ -660,7 +663,7 @@ static NSMutableArray *recentNonces;
  *   num = "50" 
  * }
 **/
-- (NSDictionary *)parseParams:(NSString *)query
++ (NSDictionary *)parseParams:(NSString *)query
 {
 	NSArray *components = [query componentsSeparatedByString:@"&"];
 	NSMutableDictionary *result = [NSMutableDictionary dictionaryWithCapacity:[components count]];
@@ -726,7 +729,7 @@ static NSMutableArray *recentNonces;
 		NSString *query = [url query];
 		if (query)
 		{
-			result = [self parseParams:query];
+			result = [HTTPConnection parseParams:query];
 		}
 	}
 	

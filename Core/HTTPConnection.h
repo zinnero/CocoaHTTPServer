@@ -64,6 +64,8 @@
 	NSMutableArray *responseDataSizes;
 }
 
+@property (nonatomic, readonly) HTTPMessage *request;
+
 - (id)initWithAsyncSocket:(GCDAsyncSocket *)newSocket configuration:(HTTPConfig *)aConfig;
 
 - (void)start;
@@ -82,7 +84,7 @@
 - (NSString *)realm;
 - (NSString *)passwordForUser:(NSString *)username;
 
-- (NSDictionary *)parseParams:(NSString *)query;
++ (NSDictionary *)parseParams:(NSString *)query;
 - (NSDictionary *)parseGetParams;
 
 - (NSString *)requestURI;
