@@ -312,7 +312,7 @@
 			buildSettings = {
 				DSTROOT = /tmp/CocoaHTTPServer.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "CocoaHTTPServer/CocoaHTTPServer-Prefix.pch";
+				GCC_PREFIX_HEADER = "CocoaHTTPServer-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -324,7 +324,7 @@
 			buildSettings = {
 				DSTROOT = /tmp/CocoaHTTPServer.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "CocoaHTTPServer/CocoaHTTPServer-Prefix.pch";
+				GCC_PREFIX_HEADER = "CocoaHTTPServer-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
