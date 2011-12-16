@@ -109,10 +109,10 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 	[documentRoot release];
 	[interface release];
 	
-	[netService release];
+	[netServices release];
 	[domain release];
 	[name release];
-	[type release];
+	[types release];
 	[txtRecordDictionary release];
 	
 	[connections release];
@@ -309,7 +309,7 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 	
 	dispatch_sync(serverQueue, ^{
 		
-		if (netService == nil)
+		if (netServices == nil)
 		{
 			result = nil;
 		}
@@ -317,7 +317,7 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 		{
 			
 			dispatch_block_t bonjourBlock = ^{
-				result = [[netService name] copy];
+				result = [[[netServices lastObject] name] copy];
 			};
 			
 			[[self class] performBonjourBlock:bonjourBlock];
@@ -343,24 +343,24 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
  * The type of service to publish via Bonjour.
  * No type is set by default, and one must be set in order for the service to be published.
 **/
-- (NSString *)type
+- (NSArray *)types
 {
-	__block NSString *result;
+	__block NSArray *result;
 	
 	dispatch_sync(serverQueue, ^{
-		result = [type retain];
+		result = [types retain];
 	});
 	
 	return [result autorelease];
 }
 
-- (void)setType:(NSString *)value
+- (void)setTypes:(NSArray *)value
 {
-	NSString *valueCopy = [value copy];
+	NSArray *valueCopy = [value copy];
 	
 	dispatch_async(serverQueue, ^{
-		[type release];
-		type = [valueCopy retain];
+		[types release];
+		types = [valueCopy retain];
 	});
 	
 	[valueCopy release];
@@ -391,18 +391,20 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 		txtRecordDictionary = [valueCopy retain];
 		
 		// Update the txtRecord of the netService if it has already been published
-		if (netService)
+		if (netServices)
 		{
-			NSNetService *theNetService = netService;
-			NSData *txtRecordData = nil;
-			if (txtRecordDictionary)
-				txtRecordData = [NSNetService dataFromTXTRecordDictionary:txtRecordDictionary];
-			
-			dispatch_block_t bonjourBlock = ^{
-				[theNetService setTXTRecordData:txtRecordData];
-			};
-			
-			[[self class] performBonjourBlock:bonjourBlock];
+            [netServices enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                NSNetService *theNetService = obj;
+                NSData *txtRecordData = nil;
+                if (txtRecordDictionary)
+                    txtRecordData = [NSNetService dataFromTXTRecordDictionary:txtRecordDictionary];
+                
+                dispatch_block_t bonjourBlock = ^{
+                    [theNetService setTXTRecordData:txtRecordData];
+                };
+                
+                [[self class] performBonjourBlock:bonjourBlock];
+            }];
 		}
 	});
 	
@@ -581,9 +583,9 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 #pragma mark Bonjour
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-- (NSNetService*) netService;
+- (NSArray*) netServices;
 {
-    return [[netService retain] autorelease];
+    return [[netServices retain] autorelease];
 }
 
 - (void)publishBonjour
@@ -592,32 +594,42 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 	
 	NSAssert(dispatch_get_current_queue() == serverQueue, @"Invalid queue");
 	
-	if (type)
+	if (types)
 	{
-		netService = [[NSNetService alloc] initWithDomain:domain type:type name:name port:[asyncSocket localPort]];
-		[netService setDelegate:self];
-		
-		NSNetService *theNetService = netService;
-		NSData *txtRecordData = nil;
-		if (txtRecordDictionary)
-			txtRecordData = [NSNetService dataFromTXTRecordDictionary:txtRecordDictionary];
-		
-		dispatch_block_t bonjourBlock = ^{
-			
-			[theNetService removeFromRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
-			[theNetService scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
-			[theNetService publish];
-			
-			// Do not set the txtRecordDictionary prior to publishing!!!
-			// This will cause the OS to crash!!!
-			if (txtRecordData)
-			{
-				[theNetService setTXTRecordData:txtRecordData];
-			}
-		};
-		
-		[[self class] startBonjourThreadIfNeeded];
-		[[self class] performBonjourBlock:bonjourBlock];
+        NSMutableArray *services = [NSMutableArray array];
+        [types enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            NSString *type = obj;
+            
+            NSNetService *netService = [[NSNetService alloc] initWithDomain:domain type:type name:name port:[asyncSocket localPort]];
+            [netService setDelegate:self];
+            
+            NSNetService *theNetService = netService;
+            NSData *txtRecordData = nil;
+            if (txtRecordDictionary)
+                txtRecordData = [NSNetService dataFromTXTRecordDictionary:txtRecordDictionary];
+            
+            dispatch_block_t bonjourBlock = ^{
+                
+                [theNetService removeFromRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
+                [theNetService scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
+                [theNetService publish];
+                
+                // Do not set the txtRecordDictionary prior to publishing!!!
+                // This will cause the OS to crash!!!
+                if (txtRecordData)
+                {
+                    [theNetService setTXTRecordData:txtRecordData];
+                }
+            };
+            
+            [[self class] startBonjourThreadIfNeeded];
+            [[self class] performBonjourBlock:bonjourBlock];
+            
+            [services addObject:netService];
+            [netService release];
+        }];
+        
+        netServices = [services retain];
 	}
 }
 
@@ -627,19 +639,20 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 	
 	NSAssert(dispatch_get_current_queue() == serverQueue, @"Invalid queue");
 	
-	if (netService)
+	if (netServices)
 	{
-		NSNetService *theNetService = netService;
+        [netServices enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            NSNetService *theNetService = obj;
+            
+            dispatch_block_t bonjourBlock = ^{
+                [theNetService stop];
+            };
+            
+            [[self class] performBonjourBlock:bonjourBlock];
+        }];
 		
-		dispatch_block_t bonjourBlock = ^{
-			
-			[theNetService stop];
-			[theNetService release];
-		};
-		
-		[[self class] performBonjourBlock:bonjourBlock];
-		
-		netService = nil;
+        [netServices release]; 
+        netServices = nil;
 	}
 }
 

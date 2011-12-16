@@ -32,9 +32,9 @@
 	UInt16 port;
 	
 	// NSNetService and related variables
-	NSNetService *netService;
+	NSArray *netServices;
 	NSString *domain;
-	NSString *type;
+	NSArray *types;
 	NSString *name;
 	NSString *publishedName;
 	NSDictionary *txtRecordDictionary;
@@ -147,8 +147,8 @@
  * If you change the type after the bonjour service has already been published (server already started),
  * you'll need to invoke the republishBonjour method to update the broadcasted bonjour service.
 **/
-- (NSString *)type;
-- (void)setType:(NSString *)value;
+- (NSArray *)types;
+- (void)setTypes:(NSArray *)value;
 
 /**
  * Republishes the service via bonjour if the server is running.
@@ -201,6 +201,6 @@
 /**
  *
 **/
-- (NSNetService*) netService;
+- (NSArray*) netServices;
 
 @end
