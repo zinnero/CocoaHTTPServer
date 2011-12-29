@@ -13,6 +13,7 @@
 #import "HTTPConnection.h"
 #import "HTTPResponse.h"
 #import "HTTPMessage.h"
+#import "WebSocket.h"
 
 #import "HTTPAsyncFileResponse.h"
 #import "HTTPDataResponse.h"
