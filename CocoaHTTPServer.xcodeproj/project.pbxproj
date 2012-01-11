@@ -7,13 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AA13D7E2149F3A2F00D0C5D6 /* DAVConnection.h in Sources */ = {isa = PBXBuildFile; fileRef = AA13D7DA149F3A2F00D0C5D6 /* DAVConnection.h */; };
 		AA13D7E3149F3A2F00D0C5D6 /* DAVConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = AA13D7DB149F3A2F00D0C5D6 /* DAVConnection.m */; };
-		AA13D7E4149F3A2F00D0C5D6 /* DAVResponse.h in Sources */ = {isa = PBXBuildFile; fileRef = AA13D7DC149F3A2F00D0C5D6 /* DAVResponse.h */; };
 		AA13D7E5149F3A2F00D0C5D6 /* DAVResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = AA13D7DD149F3A2F00D0C5D6 /* DAVResponse.m */; };
-		AA13D7E6149F3A2F00D0C5D6 /* DELETEResponse.h in Sources */ = {isa = PBXBuildFile; fileRef = AA13D7DE149F3A2F00D0C5D6 /* DELETEResponse.h */; };
 		AA13D7E7149F3A2F00D0C5D6 /* DELETEResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = AA13D7DF149F3A2F00D0C5D6 /* DELETEResponse.m */; };
-		AA13D7E8149F3A2F00D0C5D6 /* PUTResponse.h in Sources */ = {isa = PBXBuildFile; fileRef = AA13D7E0149F3A2F00D0C5D6 /* PUTResponse.h */; };
 		AA13D7E9149F3A2F00D0C5D6 /* PUTResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = AA13D7E1149F3A2F00D0C5D6 /* PUTResponse.m */; };
 		AA13D7EC149F3D8600D0C5D6 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AA13D7EB149F3D8600D0C5D6 /* libxml2.dylib */; };
 		AA1FF2581493A67A00820012 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA1FF2571493A67A00820012 /* Foundation.framework */; };
@@ -375,13 +371,9 @@
 				AA5F62CC1495FC0700A7A44E /* DDFileLogger.m in Sources */,
 				AA5F62CE1495FC0700A7A44E /* DDLog.m in Sources */,
 				AA5F62D01495FC0700A7A44E /* DDTTYLogger.m in Sources */,
-				AA13D7E2149F3A2F00D0C5D6 /* DAVConnection.h in Sources */,
 				AA13D7E3149F3A2F00D0C5D6 /* DAVConnection.m in Sources */,
-				AA13D7E4149F3A2F00D0C5D6 /* DAVResponse.h in Sources */,
 				AA13D7E5149F3A2F00D0C5D6 /* DAVResponse.m in Sources */,
-				AA13D7E6149F3A2F00D0C5D6 /* DELETEResponse.h in Sources */,
 				AA13D7E7149F3A2F00D0C5D6 /* DELETEResponse.m in Sources */,
-				AA13D7E8149F3A2F00D0C5D6 /* PUTResponse.h in Sources */,
 				AA13D7E9149F3A2F00D0C5D6 /* PUTResponse.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
