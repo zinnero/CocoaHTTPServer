@@ -478,9 +478,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		AA1FF2531493A67A00820012 /* CocoaHTTPServer */ = {
+		AA1FF2531493A67A00820012 /* libCocoaHTTPServer */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = AA1FF2611493A67A00820012 /* Build configuration list for PBXNativeTarget "CocoaHTTPServer" */;
+			buildConfigurationList = AA1FF2611493A67A00820012 /* Build configuration list for PBXNativeTarget "libCocoaHTTPServer" */;
 			buildPhases = (
 				AA1FF2501493A67A00820012 /* Sources */,
 				AA1FF2511493A67A00820012 /* Frameworks */,
@@ -490,14 +490,14 @@
 			);
 			dependencies = (
 			);
-			name = CocoaHTTPServer;
+			name = libCocoaHTTPServer;
 			productName = CocoaHTTPServer;
 			productReference = AA1FF2541493A67A00820012 /* libCocoaHTTPServer.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		AA5B929514D6D8C900341746 /* CocoaHTTPServerEmbedded */ = {
+		AA5B929514D6D8C900341746 /* CocoaHTTPServer */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = AA5B92A714D6D8C900341746 /* Build configuration list for PBXNativeTarget "CocoaHTTPServerEmbedded" */;
+			buildConfigurationList = AA5B92A714D6D8C900341746 /* Build configuration list for PBXNativeTarget "CocoaHTTPServer" */;
 			buildPhases = (
 				AA5B929114D6D8C900341746 /* Sources */,
 				AA5B929214D6D8C900341746 /* Frameworks */,
@@ -508,7 +508,7 @@
 			);
 			dependencies = (
 			);
-			name = CocoaHTTPServerEmbedded;
+			name = CocoaHTTPServer;
 			productName = CocoaHTTPServerEmbedded;
 			productReference = AA5B929614D6D8C900341746 /* CocoaHTTPServer.framework */;
 			productType = "com.apple.product-type.framework";
@@ -533,8 +533,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				AA1FF2531493A67A00820012 /* CocoaHTTPServer */,
-				AA5B929514D6D8C900341746 /* CocoaHTTPServerEmbedded */,
+				AA1FF2531493A67A00820012 /* libCocoaHTTPServer */,
+				AA5B929514D6D8C900341746 /* CocoaHTTPServer */,
 			);
 		};
 /* End PBXProject section */
@@ -636,7 +636,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -651,7 +650,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				SDKROOT = iphoneos;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 			};
 			name = Debug;
 		};
@@ -659,7 +658,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -667,7 +665,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				SDKROOT = iphoneos;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -675,13 +673,15 @@
 		AA1FF2621493A67A00820012 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				DSTROOT = /tmp/CocoaHTTPServer.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CocoaHTTPServer-Prefix.pch";
 				HEADER_SEARCH_PATHS = "\"${SDK_DIR}\"/usr/include/libxml2";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = CocoaHTTPServer;
 				PUBLIC_HEADERS_FOLDER_PATH = "$(PRODUCT_NAME)";
+				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -689,13 +689,15 @@
 		AA1FF2631493A67A00820012 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				DSTROOT = /tmp/CocoaHTTPServer.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CocoaHTTPServer-Prefix.pch";
 				HEADER_SEARCH_PATHS = "\"${SDK_DIR}\"/usr/include/libxml2";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = CocoaHTTPServer;
 				PUBLIC_HEADERS_FOLDER_PATH = "$(PRODUCT_NAME)";
+				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
@@ -722,6 +724,8 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = CocoaHTTPServer;
 				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VALID_ARCHS = x86_64;
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Debug;
@@ -748,6 +752,8 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = CocoaHTTPServer;
 				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VALID_ARCHS = x86_64;
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Release;
@@ -764,7 +770,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		AA1FF2611493A67A00820012 /* Build configuration list for PBXNativeTarget "CocoaHTTPServer" */ = {
+		AA1FF2611493A67A00820012 /* Build configuration list for PBXNativeTarget "libCocoaHTTPServer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AA1FF2621493A67A00820012 /* Debug */,
@@ -773,7 +779,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		AA5B92A714D6D8C900341746 /* Build configuration list for PBXNativeTarget "CocoaHTTPServerEmbedded" */ = {
+		AA5B92A714D6D8C900341746 /* Build configuration list for PBXNativeTarget "CocoaHTTPServer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AA5B92A814D6D8C900341746 /* Debug */,
