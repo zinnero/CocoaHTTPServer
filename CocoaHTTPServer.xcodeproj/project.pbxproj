@@ -42,15 +42,10 @@
 		AA1FF2A11494119200820012 /* HTTPRedirectResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = AA1FF2851494119200820012 /* HTTPRedirectResponse.m */; };
 		AA1FF2A21494119200820012 /* WebSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = AA1FF2861494119200820012 /* WebSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AA1FF2A31494119200820012 /* WebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = AA1FF2871494119200820012 /* WebSocket.m */; };
-		AA5B928314D6D6C500341746 /* HTTPRouteDefinition.h in Sources */ = {isa = PBXBuildFile; fileRef = AA5B927914D6D6C500341746 /* HTTPRouteDefinition.h */; };
 		AA5B928414D6D6C500341746 /* HTTPRouteDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5B927A14D6D6C500341746 /* HTTPRouteDefinition.m */; };
-		AA5B928514D6D6C500341746 /* HTTPRouteMapping.h in Sources */ = {isa = PBXBuildFile; fileRef = AA5B927B14D6D6C500341746 /* HTTPRouteMapping.h */; };
 		AA5B928614D6D6C500341746 /* HTTPRouteMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5B927C14D6D6C500341746 /* HTTPRouteMapping.m */; };
-		AA5B928714D6D6C500341746 /* RouteDefinition.h in Sources */ = {isa = PBXBuildFile; fileRef = AA5B927D14D6D6C500341746 /* RouteDefinition.h */; };
 		AA5B928814D6D6C500341746 /* RouteDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5B927E14D6D6C500341746 /* RouteDefinition.m */; };
-		AA5B928914D6D6C500341746 /* RoutingHTTPConnection.h in Sources */ = {isa = PBXBuildFile; fileRef = AA5B927F14D6D6C500341746 /* RoutingHTTPConnection.h */; };
 		AA5B928A14D6D6C500341746 /* RoutingHTTPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5B928014D6D6C500341746 /* RoutingHTTPConnection.m */; };
-		AA5B928B14D6D6C500341746 /* WebSocketRouteDefinition.h in Sources */ = {isa = PBXBuildFile; fileRef = AA5B928114D6D6C500341746 /* WebSocketRouteDefinition.h */; };
 		AA5B928C14D6D6C500341746 /* WebSocketRouteDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5B928214D6D6C500341746 /* WebSocketRouteDefinition.m */; };
 		AA5B92A214D6D8C900341746 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AA5B92A014D6D8C900341746 /* InfoPlist.strings */; };
 		AA5B92AA14D6D92400341746 /* CocoaHTTPServer.h in Headers */ = {isa = PBXBuildFile; fileRef = AA5F62D51496008900A7A44E /* CocoaHTTPServer.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -578,15 +573,10 @@
 				AA13D7E5149F3A2F00D0C5D6 /* DAVResponse.m in Sources */,
 				AA13D7E7149F3A2F00D0C5D6 /* DELETEResponse.m in Sources */,
 				AA13D7E9149F3A2F00D0C5D6 /* PUTResponse.m in Sources */,
-				AA5B928314D6D6C500341746 /* HTTPRouteDefinition.h in Sources */,
 				AA5B928414D6D6C500341746 /* HTTPRouteDefinition.m in Sources */,
-				AA5B928514D6D6C500341746 /* HTTPRouteMapping.h in Sources */,
 				AA5B928614D6D6C500341746 /* HTTPRouteMapping.m in Sources */,
-				AA5B928714D6D6C500341746 /* RouteDefinition.h in Sources */,
 				AA5B928814D6D6C500341746 /* RouteDefinition.m in Sources */,
-				AA5B928914D6D6C500341746 /* RoutingHTTPConnection.h in Sources */,
 				AA5B928A14D6D6C500341746 /* RoutingHTTPConnection.m in Sources */,
-				AA5B928B14D6D6C500341746 /* WebSocketRouteDefinition.h in Sources */,
 				AA5B928C14D6D6C500341746 /* WebSocketRouteDefinition.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
