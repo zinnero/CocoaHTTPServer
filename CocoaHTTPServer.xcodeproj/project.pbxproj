@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AA01B866151CBC2F00BBF257 /* DAVResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = AA13D7DC149F3A2F00D0C5D6 /* DAVResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AA13D7E3149F3A2F00D0C5D6 /* DAVConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = AA13D7DB149F3A2F00D0C5D6 /* DAVConnection.m */; };
 		AA13D7E5149F3A2F00D0C5D6 /* DAVResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = AA13D7DD149F3A2F00D0C5D6 /* DAVResponse.m */; };
 		AA13D7E7149F3A2F00D0C5D6 /* DELETEResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = AA13D7DF149F3A2F00D0C5D6 /* DELETEResponse.m */; };
@@ -439,6 +440,7 @@
 				AADA6CC314D6E965006F82EE /* RoutingHTTPConnection.h in Headers */,
 				AADA6CC414D6E965006F82EE /* WebSocketRouteDefinition.h in Headers */,
 				AA1FF2A21494119200820012 /* WebSocket.h in Headers */,
+				AA01B866151CBC2F00BBF257 /* DAVResponse.h in Headers */,
 				AA1FF2691494117C00820012 /* CocoaHTTPServer-Prefix.pch in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
