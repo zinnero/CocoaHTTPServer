@@ -12,10 +12,11 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN;
 - (id) initWithFilePath:(NSString*)path {
   if ((self = [super init])) {
     BOOL exists = [[NSFileManager defaultManager] fileExistsAtPath:path];
-    if ([[NSFileManager defaultManager] removeItemAtPath:path error:NULL]) {
+    NSError *error = nil;
+    if ([[NSFileManager defaultManager] removeItemAtPath:path error:&error]) {
       _status = exists ? 200 : 204;
     } else {
-      HTTPLogError(@"Failed deleting \"%@\"", path);
+      HTTPLogError(@"Failed deleting \"%@\" : %@", path, error);
       _status = 404;
     }
   }
