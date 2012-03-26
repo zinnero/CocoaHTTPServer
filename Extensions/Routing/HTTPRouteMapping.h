@@ -11,6 +11,8 @@
 #import "WebSocketRouteDefinition.h"
 
 typedef NSObject<HTTPResponse>* (^HTTPRequestHandler)(HTTPConnection* connection, NSString *method, NSString *path, NSDictionary *pathParameters, NSDictionary *requestParameters);
+typedef BOOL (^HTTPRequestExpectsBodyCallback)(NSString *method, NSString *path, HTTPMessage *request);
+
 @class HTTPRouteDefinition;
 
 
@@ -26,11 +28,11 @@ typedef NSObject<HTTPResponse>* (^HTTPRequestHandler)(HTTPConnection* connection
 - (HTTPRouteDefinition*) routeDefinitionForMethod:(NSString*)method path:(NSString *)path;
 - (WebSocketRouteDefinition*) webSocketRouteDefinitionForPath:(NSString *)path;
 
-- (void) addHandlerForMethod:(NSString*)method withPath:(NSString*)path handler:(HTTPRequestHandler)handler;
-- (void) addHandlerForGetWithPath:(NSString*)path handler:(HTTPRequestHandler)handler;
-- (void) addHandlerForPostWithPath:(NSString*)path handler:(HTTPRequestHandler)handler;
-- (void) addHandlerForPutWithPath:(NSString*)path handler:(HTTPRequestHandler)handler;
-- (void) addHandlerForDeleteWithPath:(NSString*)path handler:(HTTPRequestHandler)handler;
+- (HTTPRouteDefinition*) addHandlerForMethod:(NSString*)method withPath:(NSString*)path handler:(HTTPRequestHandler)handler;
+- (HTTPRouteDefinition*) addHandlerForGetWithPath:(NSString*)path handler:(HTTPRequestHandler)handler;
+- (HTTPRouteDefinition*) addHandlerForPostWithPath:(NSString*)path handler:(HTTPRequestHandler)handler;
+- (HTTPRouteDefinition*) addHandlerForPutWithPath:(NSString*)path handler:(HTTPRequestHandler)handler;
+- (HTTPRouteDefinition*) addHandlerForDeleteWithPath:(NSString*)path handler:(HTTPRequestHandler)handler;
 
 - (WebSocketRouteDefinition*) addWebSocketHandlerForPath:(NSString*)path receivedMessageHandler:(WebSocketDidReceiveMessageHandler)handler;
 

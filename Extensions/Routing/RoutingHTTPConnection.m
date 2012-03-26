@@ -54,6 +54,11 @@
 
 - (BOOL)expectsRequestBodyFromMethod:(NSString *)method atPath:(NSString *)path
 {
+    HTTPRouteDefinition *route = [[HTTPRouteMapping sharedInstance] routeDefinitionForMethod:method path:path];
+    if (route && route.expectsRequestBodyCallback) {
+        return route.expectsRequestBodyCallback(method, path, self.request);
+    }
+    
 	if([method isEqualToString:@"POST"] || [method isEqualToString:@"PUT"]) {
 		return YES;
     }
@@ -120,7 +125,6 @@
 }
 
 - (void) finishBody {
-    NSAssert(_requestContentStream != nil, @"requestContentStream should not be nil");
     if (self.requestContentStream) {
         [self.requestContentStream close];
         self.requestContentStream = nil;

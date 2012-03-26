@@ -43,6 +43,8 @@
 		AA1FF2A11494119200820012 /* HTTPRedirectResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = AA1FF2851494119200820012 /* HTTPRedirectResponse.m */; };
 		AA1FF2A21494119200820012 /* WebSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = AA1FF2861494119200820012 /* WebSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AA1FF2A31494119200820012 /* WebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = AA1FF2871494119200820012 /* WebSocket.m */; };
+		AA51E8B5152052F60006BECF /* PUTResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = AA13D7E0149F3A2F00D0C5D6 /* PUTResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AA51E8B7152052F90006BECF /* DELETEResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = AA13D7DE149F3A2F00D0C5D6 /* DELETEResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AA5B928414D6D6C500341746 /* HTTPRouteDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5B927A14D6D6C500341746 /* HTTPRouteDefinition.m */; };
 		AA5B928614D6D6C500341746 /* HTTPRouteMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5B927C14D6D6C500341746 /* HTTPRouteMapping.m */; };
 		AA5B928814D6D6C500341746 /* RouteDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5B927E14D6D6C500341746 /* RouteDefinition.m */; };
@@ -441,6 +443,8 @@
 				AADA6CC414D6E965006F82EE /* WebSocketRouteDefinition.h in Headers */,
 				AA1FF2A21494119200820012 /* WebSocket.h in Headers */,
 				AA01B866151CBC2F00BBF257 /* DAVResponse.h in Headers */,
+				AA51E8B5152052F60006BECF /* PUTResponse.h in Headers */,
+				AA51E8B7152052F90006BECF /* DELETEResponse.h in Headers */,
 				AA1FF2691494117C00820012 /* CocoaHTTPServer-Prefix.pch in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

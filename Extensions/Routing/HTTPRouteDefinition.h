@@ -14,9 +14,15 @@
 @interface HTTPRouteDefinition : RouteDefinition
 
 @property (copy, nonatomic, readonly) NSString            *method;
-@property (copy, nonatomic, readonly) HTTPRequestHandler  handler;
+
+// the following two are mutualy exclusive: if there's a handler it's taken.
+@property (copy, nonatomic, readonly)  HTTPRequestHandler  handler;
+@property (copy, nonatomic, readonly)  Class               connectionClass;
+
+@property (copy, nonatomic, readwrite) HTTPRequestExpectsBodyCallback expectsRequestBodyCallback;
 
 
 - (id) initWithMethod:(NSString*)method path:(NSString*)path error:(NSError**)outError handler:(HTTPRequestHandler)handler;
+- (id) initWithMethod:(NSString*)method path:(NSString*)path error:(NSError**)outError connectionClass:(Class)connectionClass;
 
 @end

@@ -75,29 +75,30 @@
     return definition;
 }
 
-- (void) addHandlerForMethod:(NSString*)method withPath:(NSString*)path handler:(HTTPRequestHandler)handler;
+- (HTTPRouteDefinition*) addHandlerForMethod:(NSString*)method withPath:(NSString*)path handler:(HTTPRequestHandler)handler;
 {
     NSError *error = nil;
     HTTPRouteDefinition *definition = [[HTTPRouteDefinition alloc] initWithMethod:method path:path error:&error handler:handler];
     NSAssert1(definition, @"Invalid handler path: %@", error);
     [_routes addObject:definition];
+    return definition;
 }
 
-- (void) addHandlerForGetWithPath:(NSString*)path handler:(HTTPRequestHandler)handler;
+- (HTTPRouteDefinition*) addHandlerForGetWithPath:(NSString*)path handler:(HTTPRequestHandler)handler;
 {
-    [self addHandlerForMethod:@"GET" withPath:path handler:handler];
+    return [self addHandlerForMethod:@"GET" withPath:path handler:handler];
 }
-- (void) addHandlerForPostWithPath:(NSString*)path handler:(HTTPRequestHandler)handler;
+- (HTTPRouteDefinition*) addHandlerForPostWithPath:(NSString*)path handler:(HTTPRequestHandler)handler;
 {
-    [self addHandlerForMethod:@"POST" withPath:path handler:handler];
+    return [self addHandlerForMethod:@"POST" withPath:path handler:handler];
 }
-- (void) addHandlerForPutWithPath:(NSString*)path handler:(HTTPRequestHandler)handler;
+- (HTTPRouteDefinition*) addHandlerForPutWithPath:(NSString*)path handler:(HTTPRequestHandler)handler;
 {
-    [self addHandlerForMethod:@"PUT" withPath:path handler:handler];
+    return [self addHandlerForMethod:@"PUT" withPath:path handler:handler];
 }
-- (void) addHandlerForDeleteWithPath:(NSString*)path handler:(HTTPRequestHandler)handler;
+- (HTTPRouteDefinition*) addHandlerForDeleteWithPath:(NSString*)path handler:(HTTPRequestHandler)handler;
 {
-    [self addHandlerForMethod:@"DELETE" withPath:path handler:handler];
+    return [self addHandlerForMethod:@"DELETE" withPath:path handler:handler];
 }
 
 - (WebSocketRouteDefinition*) addWebSocketHandlerForPath:(NSString*)path receivedMessageHandler:(WebSocketDidReceiveMessageHandler)handler;
