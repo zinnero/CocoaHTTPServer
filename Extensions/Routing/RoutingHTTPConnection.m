@@ -106,7 +106,7 @@
     
     if (contentLength > HTTP_BODY_MAX_MEMORY_SIZE) {
         self.requestContentFileName = [NSTemporaryDirectory() stringByAppendingString:[[NSProcessInfo processInfo] globallyUniqueString]];
-        self.requestContentStream = [[NSOutputStream alloc] initToFileAtPath:self.requestContentFileName append:NO];
+        self.requestContentStream = [[[NSOutputStream alloc] initToFileAtPath:self.requestContentFileName append:NO] autorelease];
         [self.requestContentStream open];
     } else {
         self.requestContentBody = [NSMutableData dataWithCapacity:(NSUInteger)contentLength];
