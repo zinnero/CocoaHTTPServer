@@ -81,7 +81,7 @@
     HTTPRouteDefinition *definition = [[HTTPRouteDefinition alloc] initWithMethod:method path:path error:&error handler:handler];
     NSAssert1(definition, @"Invalid handler path: %@", error);
     [_routes addObject:definition];
-    return definition;
+    return [definition autorelease];
 }
 
 - (HTTPRouteDefinition*) addHandlerForGetWithPath:(NSString*)path handler:(HTTPRequestHandler)handler;
@@ -108,7 +108,7 @@
                                                                           didCloseHandler:nil];
     NSAssert1(definition, @"Invalid handler path: %@", error);
     [self.webSocketRoutes addObject:definition];
-    return definition;
+    return [definition autorelease];
 }
 
 @end
