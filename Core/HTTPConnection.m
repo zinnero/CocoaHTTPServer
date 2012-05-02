@@ -1600,6 +1600,7 @@ static NSMutableArray *recentNonces;
 	}
 	
 	NSString *relativePath = [[NSURL URLWithString:path relativeToURL:docRoot] relativePath];
+    if (!relativePath) relativePath = @"/";
 	
 	// Part 2: Append relative path to document root (base path)
 	// 
@@ -1634,8 +1635,8 @@ static NSMutableArray *recentNonces;
 	{
 		documentRoot = [documentRoot stringByAppendingString:@"/"];
 	}
-	
-	if (![fullPath hasPrefix:documentRoot])
+
+    if (![fullPath hasPrefix:documentRoot])
 	{
 		HTTPLogWarn(@"%@[%p]: Request for file outside document root", THIS_FILE, self);
 		return nil;
