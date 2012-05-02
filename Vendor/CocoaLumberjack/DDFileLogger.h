@@ -6,11 +6,11 @@
 /**
  * Welcome to Cocoa Lumberjack!
  * 
- * The Google Code page has a wealth of documentation if you have any questions.
- * http://code.google.com/p/cocoalumberjack/
+ * The project page has a wealth of documentation if you have any questions.
+ * https://github.com/robbiehanson/CocoaLumberjack
  * 
- * If you're new to the project you may wish to read the "Getting Started" page.
- * http://code.google.com/p/cocoalumberjack/wiki/GettingStarted
+ * If you're new to the project you may wish to read the "Getting Started" wiki.
+ * https://github.com/robbiehanson/CocoaLumberjack/wiki/GettingStarted
  * 
  * 
  * This class provides a logger to write log statements to a file.
@@ -96,8 +96,8 @@
 // 
 // All log files are placed inside the logsDirectory.
 // If a specific logsDirectory isn't specified, the default directory is used.
-// On Mac, this is in ~/Library/Application Support/<Application Name>/Logs.
-// On iPhone, this is in ~/Documents/Logs.
+// On Mac, this is in ~/Library/Logs/<Application Name>.
+// On iPhone, this is in ~/Library/Caches/Logs.
 // 
 // Log files are named "log-<uuid>.txt",
 // where uuid is a 6 character hexadecimal consisting of the set [0123456789ABCDEF].
@@ -141,12 +141,12 @@
 
 @interface DDFileLogger : DDAbstractLogger <DDLogger>
 {
-	id <DDLogFileManager> logFileManager;
+	__strong id <DDLogFileManager> logFileManager;
 	
 	DDLogFileInfo *currentLogFileInfo;
 	NSFileHandle *currentLogFileHandle;
 	
-	NSTimer *rollingTimer;
+	dispatch_source_t rollingTimer;
 	
 	unsigned long long maximumFileSize;
 	NSTimeInterval rollingFrequency;
@@ -184,7 +184,7 @@
 
 @property (readwrite, assign) NSTimeInterval rollingFrequency;
 
-@property (nonatomic, readonly) id <DDLogFileManager> logFileManager;
+@property (strong, nonatomic, readonly) id <DDLogFileManager> logFileManager;
 
 
 // You can optionally force the current log file to be rolled with this method.
@@ -217,24 +217,24 @@
 
 @interface DDLogFileInfo : NSObject
 {
-	NSString *filePath;
-	NSString *fileName;
+	__strong NSString *filePath;
+	__strong NSString *fileName;
 	
-	NSDictionary *fileAttributes;
+	__strong NSDictionary *fileAttributes;
 	
-	NSDate *creationDate;
-	NSDate *modificationDate;
+	__strong NSDate *creationDate;
+	__strong NSDate *modificationDate;
 	
 	unsigned long long fileSize;
 }
 
-@property (nonatomic, readonly) NSString *filePath;
-@property (nonatomic, readonly) NSString *fileName;
+@property (strong, nonatomic, readonly) NSString *filePath;
+@property (strong, nonatomic, readonly) NSString *fileName;
 
-@property (nonatomic, readonly) NSDictionary *fileAttributes;
+@property (strong, nonatomic, readonly) NSDictionary *fileAttributes;
 
-@property (nonatomic, readonly) NSDate *creationDate;
-@property (nonatomic, readonly) NSDate *modificationDate;
+@property (strong, nonatomic, readonly) NSDate *creationDate;
+@property (strong, nonatomic, readonly) NSDate *modificationDate;
 
 @property (nonatomic, readonly) unsigned long long fileSize;
 
