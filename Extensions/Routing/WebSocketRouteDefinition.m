@@ -51,7 +51,7 @@
     webSocket.didOpenHandler = self.didOpenHandler;
     webSocket.didCloseHandler = self.didCloseHandler;
     webSocket.didReceiveMessageHandler = self.didReceiveMessageHandler;
-    return [webSocket autorelease];
+    return webSocket;
 }
 
 @end

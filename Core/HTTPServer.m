@@ -331,7 +331,7 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 	__block NSArray *result;
 	
 	dispatch_sync(serverQueue, ^{
-		result = type;
+		result = types;
 	});
 	
 	return result;
@@ -342,7 +342,7 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 	NSArray *valueCopy = [value copy];
 	
 	dispatch_async(serverQueue, ^{
-		type = valueCopy;
+		types = valueCopy;
 	});
 	
 }
@@ -554,7 +554,7 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 
 - (NSArray*) netServices;
 {
-    return [[netServices retain] autorelease];
+    return netServices;
 }
 
 - (void)publishBonjour
@@ -595,10 +595,9 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
             [[self class] performBonjourBlock:bonjourBlock];
             
             [services addObject:netService];
-            [netService release];
         }];
         
-        netServices = [services retain];
+        netServices = services;
 	}
 }
 
@@ -620,7 +619,6 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
             [[self class] performBonjourBlock:bonjourBlock];
         }];
 		
-        [netServices release]; 
         netServices = nil;
 	}
 }
