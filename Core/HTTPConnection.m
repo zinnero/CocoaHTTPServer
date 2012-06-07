@@ -145,11 +145,11 @@ static NSMutableArray *recentNonces;
 		}
 		
 		// Take over ownership of the socket
-		asyncSocket = [newSocket retain];
+		asyncSocket = newSocket;
 		[asyncSocket setDelegate:self delegateQueue:connectionQueue];
 		
 		// Store configuration
-		config = [aConfig retain];
+		config = aConfig;
 		
 		// Initialize lastNC (last nonce count).
 		// Used with digest access authentication.
@@ -177,27 +177,17 @@ static NSMutableArray *recentNonces;
 	
 	[asyncSocket setDelegate:nil delegateQueue:NULL];
 	[asyncSocket disconnect];
-	[asyncSocket release];
 	
-	[config release];
 	
-	[request release];
 	
-	[nonce release];
 	
 	if ([httpResponse respondsToSelector:@selector(connectionDidClose)])
 	{
 		[httpResponse connectionDidClose];
 	}
-	[httpResponse release];
 	
-	[ranges release];
-	[ranges_headers release];
-	[ranges_boundry release];
 	
-	[responseDataSizes release];
 	
-	[super dealloc];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -374,7 +364,7 @@ static NSMutableArray *recentNonces;
 	// We use the Core Foundation UUID class to generate a nonce value for us
 	// UUIDs (Universally Unique Identifiers) are 128-bit values guaranteed to be unique.
 	CFUUIDRef theUUID = CFUUIDCreate(NULL);
-	NSString *newNonce = [NSMakeCollectable(CFUUIDCreateString(NULL, theUUID)) autorelease];
+	NSString *newNonce = (__bridge_transfer NSString *)CFUUIDCreateString(NULL, theUUID);
 	CFRelease(theUUID);
 	
 	// We have to remember that the HTTP protocol is stateless.
@@ -405,7 +395,7 @@ static NSMutableArray *recentNonces;
 	HTTPLogTrace();
 	
 	// Extract the authentication information from the Authorization header
-	HTTPAuthenticationRequest *auth = [[[HTTPAuthenticationRequest alloc] initWithRequest:request] autorelease];
+	HTTPAuthenticationRequest *auth = [[HTTPAuthenticationRequest alloc] initWithRequest:request];
 	
 	if ([self useDigestAccessAuthentication])
 	{
@@ -449,7 +439,6 @@ static NSMutableArray *recentNonces;
 			if ([recentNonces containsObject:[auth nonce]])
 			{
 				// Store nonce in local (cached) nonce variable to prevent array searches in the future
-				[nonce release];
 				nonce = [[auth nonce] copy];
 				
 				// The client has switched to using a different nonce value
@@ -506,7 +495,7 @@ static NSMutableArray *recentNonces;
 		
 		NSData *temp = [[base64Credentials dataUsingEncoding:NSUTF8StringEncoding] base64Decoded];
 		
-		NSString *credentials = [[[NSString alloc] initWithData:temp encoding:NSUTF8StringEncoding] autorelease];
+		NSString *credentials = [[NSString alloc] initWithData:temp encoding:NSUTF8StringEncoding];
 		
 		// The credentials should be of the form "username:password"
 		// The username is not allowed to contain a colon
@@ -569,17 +558,14 @@ static NSMutableArray *recentNonces;
 **/
 - (void)start
 {
-	dispatch_async(connectionQueue, ^{
+	dispatch_async(connectionQueue, ^{ @autoreleasepool {
 		
-		if (started) return;
-		started = YES;
-		
-		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-		
-		[self startConnection];
-		
-		[pool drain];
-	});
+		if (!started)
+		{
+			started = YES;
+			[self startConnection];
+		}
+	}});
 }
 
 /**
@@ -588,15 +574,12 @@ static NSMutableArray *recentNonces;
 **/
 - (void)stop
 {
-	dispatch_async(connectionQueue, ^{
-		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	dispatch_async(connectionQueue, ^{ @autoreleasepool {
 		
 		// Disconnect the socket.
 		// The socketDidDisconnect delegate method will handle everything else.
 		[asyncSocket disconnect];
-		
-		[pool drain];
-	});
+	}});
 }
 
 /**
@@ -684,13 +667,13 @@ static NSMutableArray *recentNonces;
 				{
 					CFStringRef k, v;
 					
-					k = CFURLCreateStringByReplacingPercentEscapes(NULL, (CFStringRef)escapedKey, CFSTR(""));
-					v = CFURLCreateStringByReplacingPercentEscapes(NULL, (CFStringRef)escapedValue, CFSTR(""));
+					k = CFURLCreateStringByReplacingPercentEscapes(NULL, (__bridge CFStringRef)escapedKey, CFSTR(""));
+					v = CFURLCreateStringByReplacingPercentEscapes(NULL, (__bridge CFStringRef)escapedValue, CFSTR(""));
 					
 					NSString *key, *value;
 					
-					key   = [NSMakeCollectable(k) autorelease];
-					value = [NSMakeCollectable(v) autorelease];
+					key   = (__bridge_transfer NSString *)k;
+					value = (__bridge_transfer NSString *)v;
 					
 					if (key)
 					{
@@ -769,11 +752,11 @@ static NSMutableArray *recentNonces;
 	NSUInteger tIndex = eqsignRange.location;
 	NSUInteger fIndex = eqsignRange.location + eqsignRange.length;
 	
-	NSString *rangeType  = [[[rangeHeader substringToIndex:tIndex] mutableCopy] autorelease];
-	NSString *rangeValue = [[[rangeHeader substringFromIndex:fIndex] mutableCopy] autorelease];
+	NSMutableString *rangeType  = [[rangeHeader substringToIndex:tIndex] mutableCopy];
+	NSMutableString *rangeValue = [[rangeHeader substringFromIndex:fIndex] mutableCopy];
 	
-	CFStringTrimWhitespace((CFMutableStringRef)rangeType);
-	CFStringTrimWhitespace((CFMutableStringRef)rangeValue);
+	CFStringTrimWhitespace((__bridge CFMutableStringRef)rangeType);
+	CFStringTrimWhitespace((__bridge CFMutableStringRef)rangeValue);
 	
 	if([rangeType caseInsensitiveCompare:@"bytes"] != NSOrderedSame) return NO;
 	
@@ -781,7 +764,6 @@ static NSMutableArray *recentNonces;
 	
 	if([rangeComponents count] == 0) return NO;
 	
-	[ranges release];
 	ranges = [[NSMutableArray alloc] initWithCapacity:[rangeComponents count]];
 	
 	rangeIndex = 0;
@@ -909,7 +891,6 @@ static NSMutableArray *recentNonces;
 		
 		NSString *tempStr = [[NSString alloc] initWithData:tempData encoding:NSUTF8StringEncoding];
 		HTTPLogVerbose(@"%@[%p]: Received HTTP request:\n%@", THIS_FILE, self, tempStr);
-		[tempStr release];
 	}
 	
 	// Check the HTTP version
@@ -956,7 +937,6 @@ static NSMutableArray *recentNonces;
 			{
 				// The WebSocket is using the socket,
 				// so make sure we don't disconnect it in the dealloc method.
-				[asyncSocket release];
 				asyncSocket = nil;
 				
 				[self die];
@@ -1001,7 +981,7 @@ static NSMutableArray *recentNonces;
 	// Note: We already checked to ensure the method was supported in onSocket:didReadData:withTag:
 	
 	// Respond properly to HTTP 'GET' and 'HEAD' commands
-	httpResponse = [[self httpResponseForMethod:method URI:uri] retain];
+	httpResponse = [self httpResponseForMethod:method URI:uri];
 	
 	if (httpResponse == nil)
 	{
@@ -1070,7 +1050,7 @@ static NSMutableArray *recentNonces;
 	ranges_headers = [[NSMutableArray alloc] initWithCapacity:[ranges count]];
 	
 	CFUUIDRef theUUID = CFUUIDCreate(NULL);
-	ranges_boundry = NSMakeCollectable(CFUUIDCreateString(NULL, theUUID));
+	ranges_boundry = (__bridge_transfer NSString *)CFUUIDCreateString(NULL, theUUID);
 	CFRelease(theUUID);
 	
 	NSString *startingBoundryStr = [NSString stringWithFormat:@"\r\n--%@\r\n", ranges_boundry];
@@ -1318,7 +1298,6 @@ static NSMutableArray *recentNonces;
 		}
 	}
 	
-	[response release];
 }
 
 /**
@@ -1687,7 +1666,7 @@ static NSMutableArray *recentNonces;
 	
 	if (filePath && [[NSFileManager defaultManager] fileExistsAtPath:filePath isDirectory:&isDir] && !isDir)
 	{
-		return [[[HTTPFileResponse alloc] initWithFilePath:filePath forConnection:self] autorelease];
+		return [[HTTPFileResponse alloc] initWithFilePath:filePath forConnection:self];
 	
 		// Use me instead for asynchronous file IO.
 		// Generally better for larger files.
@@ -1777,7 +1756,6 @@ static NSMutableArray *recentNonces;
 	NSData *responseData = [self preprocessErrorResponse:response];
 	[asyncSocket writeData:responseData withTimeout:TIMEOUT_WRITE_ERROR tag:HTTP_RESPONSE];
 	
-	[response release];
 }
 
 /**
@@ -1807,7 +1785,6 @@ static NSMutableArray *recentNonces;
 	NSData *responseData = [self preprocessErrorResponse:response];
 	[asyncSocket writeData:responseData withTimeout:TIMEOUT_WRITE_ERROR tag:HTTP_RESPONSE];
 	
-	[response release];
 }
 
 /**
@@ -1831,7 +1808,6 @@ static NSMutableArray *recentNonces;
 	NSData *responseData = [self preprocessErrorResponse:response];
 	[asyncSocket writeData:responseData withTimeout:TIMEOUT_WRITE_ERROR tag:HTTP_FINAL_RESPONSE];
 	
-	[response release];
 	
 	// Note: We used the HTTP_FINAL_RESPONSE tag to disconnect after the response is sent.
 	// We do this because we couldn't parse the request,
@@ -1860,7 +1836,6 @@ static NSMutableArray *recentNonces;
 	NSData *responseData = [self preprocessErrorResponse:response];
 	[asyncSocket writeData:responseData withTimeout:TIMEOUT_WRITE_ERROR tag:HTTP_FINAL_RESPONSE];
     
-	[response release];
 	
 	// Note: We used the HTTP_FINAL_RESPONSE tag to disconnect after the response is sent.
 	// We do this because the method may include an http body.
@@ -1885,7 +1860,6 @@ static NSMutableArray *recentNonces;
 	NSData *responseData = [self preprocessErrorResponse:response];
 	[asyncSocket writeData:responseData withTimeout:TIMEOUT_WRITE_ERROR tag:HTTP_RESPONSE];
 	
-	[response release];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1922,7 +1896,7 @@ static NSMutableArray *recentNonces;
 		[df setFormatterBehavior:NSDateFormatterBehavior10_4];
 		[df setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"GMT"]];
 		[df setDateFormat:@"EEE, dd MMM y HH:mm:ss 'GMT'"];
-		[df setLocale:[[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"] autorelease]];
+		[df setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"]];
 		
 		// For some reason, using zzz in the format string produces GMT+00:00
 	});
@@ -2222,7 +2196,7 @@ static NSMutableArray *recentNonces;
 			// possibly followed by a semicolon and extra parameters that can be ignored,
 			// and ending with CRLF.
 			
-			NSString *sizeLine = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
+			NSString *sizeLine = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 			
 			requestChunkSize = (UInt64)strtoull([sizeLine UTF8String], NULL, 16);
 			requestChunkSizeReceived = 0;
@@ -2490,7 +2464,6 @@ static NSMutableArray *recentNonces;
 {
 	HTTPLogTrace();
 	
-	[asyncSocket release];
 	asyncSocket = nil;
 	
 	[self die];
@@ -2516,15 +2489,13 @@ static NSMutableArray *recentNonces;
 	// We do this to give the HTTPResponse classes the flexibility to call
 	// this method whenever they want, even from within a readDataOfLength method.
 	
-	dispatch_async(connectionQueue, ^{
+	dispatch_async(connectionQueue, ^{ @autoreleasepool {
 		
 		if (sender != httpResponse)
 		{
 			HTTPLogWarn(@"%@[%p]: %@ - Sender is not current httpResponse", THIS_FILE, self, THIS_METHOD);
 			return;
 		}
-		
-		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 		
 		if (!sentResponseHeaders)
 		{
@@ -2544,9 +2515,7 @@ static NSMutableArray *recentNonces;
 					[self continueSendingMultiRangeResponseBody];
 			}
 		}
-		
-		[pool drain];
-	});
+	}});
 }
 
 /**
@@ -2563,7 +2532,7 @@ static NSMutableArray *recentNonces;
 	// We do this to give the HTTPResponse classes the flexibility to call
 	// this method whenever they want, even from within a readDataOfLength method.
 	
-	dispatch_async(connectionQueue, ^{
+	dispatch_async(connectionQueue, ^{ @autoreleasepool {
 		
 		if (sender != httpResponse)
 		{
@@ -2571,12 +2540,8 @@ static NSMutableArray *recentNonces;
 			return;
 		}
 		
-		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-		
 		[asyncSocket disconnectAfterWriting];
-		
-		[pool drain];
-	});
+	}});
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2597,15 +2562,10 @@ static NSMutableArray *recentNonces;
 	// 
 	// If you override this method, you should take care to invoke [super finishResponse] at some point.
 	
-	[request release];
 	request = nil;
 	
-	[httpResponse release];
 	httpResponse = nil;
 	
-	[ranges release];
-	[ranges_headers release];
-	[ranges_boundry release];
 	ranges = nil;
 	ranges_headers = nil;
 	ranges_boundry = nil;
@@ -2673,7 +2633,6 @@ static NSMutableArray *recentNonces;
 	}
 	
 	// Release the http response so we don't call it's connectionDidClose method again in our dealloc method
-	[httpResponse release];
 	httpResponse = nil;
 	
 	// Post notification of dead connection
@@ -2697,8 +2656,8 @@ static NSMutableArray *recentNonces;
 {
 	if ((self = [super init]))
 	{
-		server = [aServer retain];
-		documentRoot = [aDocumentRoot retain];
+		server = aServer;
+		documentRoot = aDocumentRoot;
 	}
 	return self;
 }
@@ -2707,14 +2666,13 @@ static NSMutableArray *recentNonces;
 {
 	if ((self = [super init]))
 	{
-		server = [aServer retain];
+		server = aServer;
 		
 		documentRoot = [aDocumentRoot stringByStandardizingPath];
 		if ([documentRoot hasSuffix:@"/"])
 		{
 			documentRoot = [documentRoot stringByAppendingString:@"/"];
 		}
-		[documentRoot retain];
 		
 		if (q)
 		{
@@ -2727,13 +2685,10 @@ static NSMutableArray *recentNonces;
 
 - (void)dealloc
 {
-	[server release];
-	[documentRoot release];
 	
 	if (queue)
 		dispatch_release(queue);
 	
-	[super dealloc];
 }
 
 @end
