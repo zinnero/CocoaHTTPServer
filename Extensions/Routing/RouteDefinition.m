@@ -51,7 +51,7 @@
     if ([path hasPrefix:@"/"]) {
         path = [path substringFromIndex:1];
     }
-    NSMutableArray *components = [[path pathComponents] mutableCopy];
+    NSArray *components = [path pathComponents];
     
     NSMutableString *pattern = [NSMutableString string];
     NSMutableArray  *captureNames = [NSMutableArray array];
