@@ -550,7 +550,7 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 
 - (NSArray*) netServices;
 {
-    return [[netServices retain] autorelease];
+    return netServices;
 }
 
 - (void)publishBonjour
@@ -591,10 +591,9 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
             [[self class] performBonjourBlock:bonjourBlock];
             
             [services addObject:netService];
-            [netService release];
         }];
         
-        netServices = [services retain];
+        netServices = services;
 	}
 }
 
