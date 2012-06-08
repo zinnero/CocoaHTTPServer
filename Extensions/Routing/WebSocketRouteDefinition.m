@@ -8,8 +8,8 @@
 
 #import "WebSocketRouteDefinition.h"
 
-#import "CocoaHTTPServer/CocoaHTTPServer.h"
-#import "CocoaHTTPServer/WebSocket.h"
+#import "CocoaHTTPServer.h"
+#import "WebSocket.h"
 
 @interface BlockBasedWebSocket : WebSocket
 @property (nonatomic, copy) WebSocketDidOpenHandler didOpenHandler;
@@ -51,7 +51,7 @@
     webSocket.didOpenHandler = self.didOpenHandler;
     webSocket.didCloseHandler = self.didCloseHandler;
     webSocket.didReceiveMessageHandler = self.didReceiveMessageHandler;
-    return [webSocket autorelease];
+    return webSocket;
 }
 
 @end
