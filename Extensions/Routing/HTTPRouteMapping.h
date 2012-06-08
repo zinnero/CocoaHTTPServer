@@ -6,7 +6,7 @@
 //  Copyright (c) 2011 Christian Beer. All rights reserved.
 //
 
-#import "CocoaHTTPServer/CocoaHTTPServer.h"
+#import "CocoaHTTPServer.h"
 
 #import "WebSocketRouteDefinition.h"
 
