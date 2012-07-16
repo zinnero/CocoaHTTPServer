@@ -15,9 +15,9 @@
 #import "HTTPMessage.h"
 #import "WebSocket.h"
 
-#import "Responses/HTTPAsyncFileResponse.h"
-#import "Responses/HTTPDataResponse.h"
-#import "Responses/HTTPFileResponse.h"
-#import "Responses/HTTPDynamicFileResponse.h"
+#import "HTTPAsyncFileResponse.h"
+#import "HTTPDataResponse.h"
+#import "HTTPFileResponse.h"
+#import "HTTPDynamicFileResponse.h"
 
 #endif
