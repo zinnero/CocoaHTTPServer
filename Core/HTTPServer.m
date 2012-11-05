@@ -619,7 +619,7 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
             [[self class] performBonjourBlock:bonjourBlock];
         }];
 		
-		netServices = nil;
+        netServices = nil;
 	}
 }
 
