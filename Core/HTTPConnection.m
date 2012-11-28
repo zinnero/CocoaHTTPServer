@@ -658,7 +658,7 @@ static NSMutableArray *recentNonces;
  *   num = "50" 
  * }
 **/
-- (NSDictionary *)parseParams:(NSString *)query
++ (NSDictionary *)parseParams:(NSString *)query
 {
 	NSArray *components = [query componentsSeparatedByString:@"&"];
 	NSMutableDictionary *result = [NSMutableDictionary dictionaryWithCapacity:[components count]];
@@ -724,7 +724,7 @@ static NSMutableArray *recentNonces;
 		NSString *query = [url query];
 		if (query)
 		{
-			result = [self parseParams:query];
+			result = [[self class] parseParams:query];
 		}
 	}
 	
