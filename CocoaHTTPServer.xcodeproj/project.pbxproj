@@ -89,7 +89,7 @@
 		AA5B92CD14D6D9E000341746 /* RouteDefinition.h in Headers */ = {isa = PBXBuildFile; fileRef = AA5B927D14D6D6C500341746 /* RouteDefinition.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AA5B92CE14D6D9E000341746 /* RoutingHTTPConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = AA5B927F14D6D6C500341746 /* RoutingHTTPConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AA5B92CF14D6D9E000341746 /* WebSocketRouteDefinition.h in Headers */ = {isa = PBXBuildFile; fileRef = AA5B928114D6D6C500341746 /* WebSocketRouteDefinition.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		AA5B92D214D6DB5200341746 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5F62B81495FC0700A7A44E /* GCDAsyncSocket.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		AA5B92D214D6DB5200341746 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5F62B81495FC0700A7A44E /* GCDAsyncSocket.m */; };
 		AA5B92D414D6DB7400341746 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA5B92D314D6DB7300341746 /* Foundation.framework */; };
 		AA5B92D814D6DBB400341746 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA5B92D714D6DBB400341746 /* CoreServices.framework */; };
 		AA5B92DA14D6DBCE00341746 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA5B92D914D6DBCD00341746 /* Security.framework */; };
