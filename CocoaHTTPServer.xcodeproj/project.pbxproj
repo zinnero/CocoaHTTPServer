@@ -89,12 +89,12 @@
 		AA5B92CD14D6D9E000341746 /* RouteDefinition.h in Headers */ = {isa = PBXBuildFile; fileRef = AA5B927D14D6D6C500341746 /* RouteDefinition.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AA5B92CE14D6D9E000341746 /* RoutingHTTPConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = AA5B927F14D6D6C500341746 /* RoutingHTTPConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AA5B92CF14D6D9E000341746 /* WebSocketRouteDefinition.h in Headers */ = {isa = PBXBuildFile; fileRef = AA5B928114D6D6C500341746 /* WebSocketRouteDefinition.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		AA5B92D214D6DB5200341746 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5F62B81495FC0700A7A44E /* GCDAsyncSocket.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		AA5B92D214D6DB5200341746 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5F62B81495FC0700A7A44E /* GCDAsyncSocket.m */; };
 		AA5B92D414D6DB7400341746 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA5B92D314D6DB7300341746 /* Foundation.framework */; };
 		AA5B92D814D6DBB400341746 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA5B92D714D6DBB400341746 /* CoreServices.framework */; };
 		AA5B92DA14D6DBCE00341746 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA5B92D914D6DBCD00341746 /* Security.framework */; };
 		AA5B92DB14D6DBFB00341746 /* DDLog.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5F62C21495FC0700A7A44E /* DDLog.m */; };
-		AA5F62C61495FC0700A7A44E /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5F62B81495FC0700A7A44E /* GCDAsyncSocket.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		AA5F62C61495FC0700A7A44E /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5F62B81495FC0700A7A44E /* GCDAsyncSocket.m */; };
 		AA5F62C81495FC0700A7A44E /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5F62BC1495FC0700A7A44E /* DDAbstractDatabaseLogger.m */; };
 		AA5F62CA1495FC0700A7A44E /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5F62BE1495FC0700A7A44E /* DDASLLogger.m */; };
 		AA5F62CC1495FC0700A7A44E /* DDFileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5F62C01495FC0700A7A44E /* DDFileLogger.m */; };
@@ -520,7 +520,7 @@
 		AA1FF24B1493A67900820012 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0450;
 			};
 			buildConfigurationList = AA1FF24E1493A67900820012 /* Build configuration list for PBXProject "CocoaHTTPServer" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -672,6 +672,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				DSTROOT = /tmp/CocoaHTTPServer.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CocoaHTTPServer-Prefix.pch";
@@ -688,6 +689,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				DSTROOT = /tmp/CocoaHTTPServer.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CocoaHTTPServer-Prefix.pch";
@@ -704,6 +706,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -732,6 +736,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
