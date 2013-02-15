@@ -335,7 +335,7 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN; // | HTTP_LOG_FLAG_TRACE;
 		
 		dispatch_sync(readQueue, ^{
 			
-			NSAssert(readSourceSuspended, @"Invalid logic - perhaps HTTPConnection has changed.");
+			NSCAssert(readSourceSuspended, @"Invalid logic - perhaps HTTPConnection has changed.");
 			
 			readRequestLength = length;
 			[self resumeReadSource];
